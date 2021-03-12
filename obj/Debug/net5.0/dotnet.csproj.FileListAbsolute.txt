@@ -1,0 +1,16 @@
+C:\Users\Denis Firat\Documents\GitHub\dotnet\bin\Debug\net5.0\dotnet.exe
+C:\Users\Denis Firat\Documents\GitHub\dotnet\bin\Debug\net5.0\dotnet.deps.json
+C:\Users\Denis Firat\Documents\GitHub\dotnet\bin\Debug\net5.0\dotnet.runtimeconfig.json
+C:\Users\Denis Firat\Documents\GitHub\dotnet\bin\Debug\net5.0\dotnet.runtimeconfig.dev.json
+C:\Users\Denis Firat\Documents\GitHub\dotnet\bin\Debug\net5.0\dotnet.dll
+C:\Users\Denis Firat\Documents\GitHub\dotnet\bin\Debug\net5.0\ref\dotnet.dll
+C:\Users\Denis Firat\Documents\GitHub\dotnet\bin\Debug\net5.0\dotnet.pdb
+C:\Users\Denis Firat\Documents\GitHub\dotnet\obj\Debug\net5.0\dotnet.csprojAssemblyReference.cache
+C:\Users\Denis Firat\Documents\GitHub\dotnet\obj\Debug\net5.0\dotnet.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Denis Firat\Documents\GitHub\dotnet\obj\Debug\net5.0\dotnet.AssemblyInfoInputs.cache
+C:\Users\Denis Firat\Documents\GitHub\dotnet\obj\Debug\net5.0\dotnet.AssemblyInfo.cs
+C:\Users\Denis Firat\Documents\GitHub\dotnet\obj\Debug\net5.0\dotnet.csproj.CoreCompileInputs.cache
+C:\Users\Denis Firat\Documents\GitHub\dotnet\obj\Debug\net5.0\dotnet.dll
+C:\Users\Denis Firat\Documents\GitHub\dotnet\obj\Debug\net5.0\ref\dotnet.dll
+C:\Users\Denis Firat\Documents\GitHub\dotnet\obj\Debug\net5.0\dotnet.pdb
+C:\Users\Denis Firat\Documents\GitHub\dotnet\obj\Debug\net5.0\dotnet.genruntimeconfig.cache
