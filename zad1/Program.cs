@@ -3,7 +3,10 @@ using System.Collections.Generic;
 namespace dotnet
 {
 
-
+    //ToDo:
+    //•Sprawdz sume wag przedmiotów w plecaku w Nowej Metodzie
+    //•Dodać żeby pokazywała wszystkie przedmioty w metodzie pokazPrzedmioty()
+    //•metoda Wyjmij Ostatni Przedmiot
     public class plecak
     {
         List<przedmiot> przedmioty = new List<przedmiot>();
@@ -18,8 +21,15 @@ namespace dotnet
             przedmioty.Add(nowy);
         }
         public void pokazPrzedmioty()
-        {
-            Console.WriteLine(przedmioty[0].wagaPrzedmiotu);
+        {   
+            //Console.WriteLine(przedmioty[0].wagaPrzedmiotu);
+            //przedmioty.ForEach(Console.WriteLine(.wagaPrzedmiotu, .wartoscPrzedmiotu));
+            //przedmioty.ForEach(przedmiot => Console.Write("{0}\t", przedmiot));
+            for(int i =0;i<przedmioty.Count;i++)
+            {
+                Console.WriteLine("Waga: ", przedmioty[i].wagaPrzedmiotu);
+                Console.WriteLine("Wartosc: ", przedmioty[i].wartoscPrzedmiotu);
+            }
         }
     }
     
@@ -28,9 +38,9 @@ namespace dotnet
     public class przedmiot
     {   
         public int wagaPrzedmiotu;
-        private int wartoscPrzedmiotu;
-        private bool stanPrzedmiotu;
-        private float stosunekWartoscWaga;
+        public int wartoscPrzedmiotu;
+        //private bool stanPrzedmiotu;
+        public float stosunekWartoscWaga;
     
 
         
@@ -40,19 +50,32 @@ namespace dotnet
             wartoscPrzedmiotu = wartosc;
             stosunekWartoscWaga=wartosc/waga;
         }
-        
+        /*
         public bool ustawStan(bool stan)
         {
             stanPrzedmiotu = stan;
             return stan;
         }
+        */
     }
+
+
         class Program
     {
         static void Main(string[] args)
         {
+            List<przedmiot> listaPrzedmiotow = new List<przedmiot>();
             plecak mojPlecak = new plecak(54);
-            mojPlecak.dodajPrzedmiot(new przedmiot(10,5));
+            //Generuje listę przedmiotów
+            Random rand =new Random();
+            for (int i = 0; i < 40; i++)
+            {
+                listaPrzedmiotow.Add(new przedmiot(rand.Next(1,30),rand.Next(1,30)));
+            }
+            //Sortuj listę przedmiotów
+            listaPrzedmiotow.Sort((x, y) => y.stosunekWartoscWaga.CompareTo(x.stosunekWartoscWaga));
+            foreach (przedmiot item in listaPrzedmiotow)  
+            mojPlecak.dodajPrzedmiot(item);
             mojPlecak.pokazPrzedmioty();
             Console.WriteLine("Test!");
         }
