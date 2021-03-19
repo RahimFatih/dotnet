@@ -27,8 +27,8 @@ namespace dotnet
             //przedmioty.ForEach(przedmiot => Console.Write("{0}\t", przedmiot));
             for(int i =0;i<przedmioty.Count;i++)
             {
-                Console.WriteLine("Waga: ", przedmioty[i].wagaPrzedmiotu);
-                Console.WriteLine("Wartosc: ", przedmioty[i].wartoscPrzedmiotu);
+                Console.WriteLine("Przedmiot nr. {0}", i+1);
+                Console.WriteLine("Waga/Wartość: {0}/{1}", przedmioty[i].wagaPrzedmiotu, przedmioty[i].wartoscPrzedmiotu);
             }
         }
     }
