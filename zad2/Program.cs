@@ -5,10 +5,21 @@ using System.Data;
 using Newtonsoft.Json;
 namespace zad2
 {
-    public class downloadWeather
+    public class Cord
+    {
+        public float lon;
+        public float lat;
+    }
+    public class Weather
+    {
+        public int id;
+    }
+    public class DownloadWeather
     {
         public string timezone { get; set; }
         public string name { get; set; }
+        public Cord coord {get;set;}
+        public Weather[] weather {get;set;}
         //public string main { get; set; }
         //public string feels_like { get; set; }
         //public DataSet weather { get; set; }
@@ -29,12 +40,15 @@ namespace zad2
     {
         public static void Main(string[] args)
         {
-            string City = "Wroclaw";
-            downloadWeather myWeather = new downloadWeather();
-            Console.WriteLine(myWeather.getWeather(City));
-            downloadWeather deserializedProduct = JsonConvert.DeserializeObject<downloadWeather>(myWeather.getWeather(City));
-            Console.WriteLine(deserializedProduct.name);
-
+            
+            //string City = "Wroclaw";
+            //DownloadWeather myWeather = new DownloadWeather();
+            //Console.WriteLine(myWeather.getWeather(City));
+            //DownloadWeather deserializedProduct = JsonConvert.DeserializeObject<DownloadWeather>(myWeather.getWeather(City));
+            //Console.WriteLine(deserializedProduct.name);
+            //Console.WriteLine(deserializedProduct.coord.lat);
+            //Console.WriteLine(deserializedProduct.weather[0].id);
+            
         }
 
         
