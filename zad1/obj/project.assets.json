@@ -5859,19 +5859,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Tabit\\.nuget\\packages\\": {}
+    "C:\\Users\\Denis Firat\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Studia\\Semestr 6\\dotnet\\zad1\\dotnet.csproj",
+      "projectUniqueName": "C:\\Users\\Denis Firat\\Documents\\GitHub\\dotnet\\zad1\\dotnet.csproj",
       "projectName": "dotnet",
-      "projectPath": "D:\\Studia\\Semestr 6\\dotnet\\zad1\\dotnet.csproj",
-      "packagesPath": "C:\\Users\\Tabit\\.nuget\\packages\\",
-      "outputPath": "D:\\Studia\\Semestr 6\\dotnet\\zad1\\obj\\",
+      "projectPath": "C:\\Users\\Denis Firat\\Documents\\GitHub\\dotnet\\zad1\\dotnet.csproj",
+      "packagesPath": "C:\\Users\\Denis Firat\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Denis Firat\\Documents\\GitHub\\dotnet\\zad1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Tabit\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Denis Firat\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net5.0"

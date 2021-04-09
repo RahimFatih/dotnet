@@ -3,8 +3,12 @@ using System.Net;
 using System.IO;
 using System.Data;
 using Newtonsoft.Json;
-using System.Data.Entity;
-using System.Linq;
+//using System.Data.Entity;
+//using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+
+
 namespace zad2
 {
     public class Coord
@@ -32,6 +36,7 @@ namespace zad2
         public float speed;
         public float deg;
     }
+    [Keyless]
     public class Clouds
     {
         public float all;
@@ -46,13 +51,13 @@ namespace zad2
     }
     public class DownloadWeather
     {
-        public Coord coord {get;set;}
+        //public Coord coord {get;set;}
         public Weather[] weather {get;set;}
-        //public string base {get;set;}
+        //public string base {get; set; }
         public MainWeather main {get;set;}
         public float visibility {get;set;}
-        public Wind wind{get;set;}
-        public Clouds clouds{get;set;}
+        //public Wind wind{get;set;}
+        //public Clouds clouds{get;set;}
         public int dt{get;set;}
         public Sys sys{get;set;}
         public int timezone { get; set; }
@@ -82,26 +87,29 @@ namespace zad2
     public class WeatherByCity: DbContext
     {
         public virtual DbSet<DownloadWeather> DownloadWeathers {get;set;}
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+            => options.UseSqlite(@"Data Source=.\database\blogging.db");
     }
     public class Program
     {
         public static void Main(string[] args)
         {
-            var context = new WeatherByCity();
-            string City = "Wroclaw";
+            //var context = new WeatherByCity();
+            Console.WriteLine("Podaj miasto: ");
+            string City = Console.ReadLine();
             DownloadWeather myWeather = new DownloadWeather();
-            Console.WriteLine(myWeather.getWeather(City));
-            DownloadWeather actualWeather = JsonConvert.DeserializeObject<DownloadWeather>(myWeather.getWeather(City));
-            context.DownloadWeathers.Add(actualWeather);
-            context.SaveChanges();
             
-            //var pogody = context.DownloadWeathers.SqlQuery("select * from DownloadWeathers").ToList<DownloadWeather>();
+            DownloadWeather actualWeather = JsonConvert.DeserializeObject<DownloadWeather>(myWeather.getWeather(City));
+
+            Console.WriteLine("Miasto: " + actualWeather.name);
+            Console.WriteLine("Kraj: " + actualWeather.sys.country);
+            Console.WriteLine("Temperatura: " + actualWeather.main.temp+"°C");
+            Console.WriteLine("Zachmurzenie: " + actualWeather.weather[0].description);
+            //context.DownloadWeathers.Add(actualWeather);
+            //context.SaveChanges();
+            //var pogody = context.DownloadWeathers.FromSqlRaw("select * from DownloadWeathers");//.ToList<DownloadWeather>();
             //foreach(var pogoda in pogody)
             //    Console.WriteLine("XD");
-
-            //Console.WriteLine(deserializedProduct.name);
-            //Console.WriteLine(deserializedProduct.coord.lat);
-            //Console.WriteLine(deserializedProduct.weather[0].id);
         }
 
         
