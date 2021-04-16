@@ -36,7 +36,6 @@ namespace zad2
         public float speed;
         public float deg;
     }
-    [Keyless]
     public class Clouds
     {
         public float all;
@@ -51,13 +50,13 @@ namespace zad2
     }
     public class DownloadWeather
     {
-        //public Coord coord {get;set;}
+        public Coord coord {get;set;}
         public Weather[] weather {get;set;}
         //public string base {get; set; }
         public MainWeather main {get;set;}
         public float visibility {get;set;}
-        //public Wind wind{get;set;}
-        //public Clouds clouds{get;set;}
+        public Wind wind{get;set;}
+        public Clouds clouds{get;set;}
         public int dt{get;set;}
         public Sys sys{get;set;}
         public int timezone { get; set; }
@@ -84,9 +83,46 @@ namespace zad2
             return 0;
         }
     }
+        public class WeatherForDB
+    {
+        public string clouds {get;set;}
+        public float temp  {get;set;}
+        public float feels_like {get;set;}
+        public float temp_min {get;set;}
+        public float temp_max {get;set;}
+        public float pressure {get;set;}
+        public float humidity {get;set;}
+        public float windSpeed {get;set;}
+        public float windDeg {get;set;}
+        public string id {get;set;}
+        public string name {get;set;}
+        
+    
+        public int getWeather(DownloadWeather myWeather)
+        {
+            clouds = myWeather.weather[0].description;
+            temp = myWeather.main.temp;
+            feels_like = myWeather.main.feels_like;
+            temp_min = myWeather.main.temp_min;
+            temp_max = myWeather.main.temp_max;
+            pressure = myWeather.main.pressure;
+            humidity = myWeather.main.humidity;
+            windSpeed = myWeather.wind.speed;
+            windDeg = myWeather.wind.deg;
+            id =DateTime.Now.ToString("yyyyMMddHHmmssffff");
+            name = myWeather.name;
+            return 0; 
+        }
+        public int printWeather()
+        {
+            Console.WriteLine("Miasto: "+name);
+            return 0;
+        }
+
+    }
     public class WeatherByCity: DbContext
     {
-        public virtual DbSet<DownloadWeather> DownloadWeathers {get;set;}
+        public virtual DbSet<WeatherForDB> WeatherForDB {get;set;}
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlite(@"Data Source=.\database\blogging.db");
     }
@@ -94,24 +130,54 @@ namespace zad2
     {
         public static void Main(string[] args)
         {
-            //var context = new WeatherByCity();
-            Console.WriteLine("Podaj miasto: ");
-            string City = Console.ReadLine();
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            Console.InputEncoding = System.Text.Encoding.UTF8;
+            var context = new WeatherByCity();
+            string choosenCity;
             DownloadWeather myWeather = new DownloadWeather();
-            
-            DownloadWeather actualWeather = JsonConvert.DeserializeObject<DownloadWeather>(myWeather.getWeather(City));
+            DownloadWeather actualWeather;
+            WeatherForDB actualWeatherForDB = new WeatherForDB();
 
-            Console.WriteLine("Miasto: " + actualWeather.name);
-            Console.WriteLine("Kraj: " + actualWeather.sys.country);
-            Console.WriteLine("Temperatura: " + actualWeather.main.temp+"°C");
-            Console.WriteLine("Zachmurzenie: " + actualWeather.weather[0].description);
-            //context.DownloadWeathers.Add(actualWeather);
-            //context.SaveChanges();
-            //var pogody = context.DownloadWeathers.FromSqlRaw("select * from DownloadWeathers");//.ToList<DownloadWeather>();
-            //foreach(var pogoda in pogody)
-            //    Console.WriteLine("XD");
+            Console.WriteLine("1. Sprawdz pogode \n2. Pokaz historie dla miasta");
+            int caseSwitch = Convert.ToInt32(Console.ReadLine());
+            
+            switch (caseSwitch)
+            {
+                case 1:
+                    Console.WriteLine("Podaj miasto: ");
+                    choosenCity = Console.ReadLine();
+                    actualWeather = JsonConvert.DeserializeObject<DownloadWeather>(myWeather.getWeather(choosenCity));
+                    actualWeatherForDB.getWeather(actualWeather);
+                    Console.WriteLine("Miasto: " + actualWeather.name);
+                    Console.WriteLine("Kraj: " + actualWeather.sys.country);
+                    Console.WriteLine("Temperatura: " + actualWeather.main.temp+"°C");
+                    Console.WriteLine("Zachmurzenie: " + actualWeather.weather[0].description);            
+                    context.WeatherForDB.Add(actualWeatherForDB);
+                    context.SaveChanges();
+                    break;
+                case 2:
+                    Console.WriteLine("Podaj miasto");
+                    //var cities = context.WeatherForDB.FromSqlRaw("SELECT DISTINCT name FROM WeatherForDB");
+                    //foreach(var city in cities)
+                    //{
+                    //    Console.WriteLine(city.name);//+" "+pogoda.id.Substring(0,4)+" ");
+                    //}
+                    choosenCity = Console.ReadLine();
+                    //Console.WriteLine("SELECT * FROM WeatherForDB WHERE name = '"+choosenCity+"'");
+                    var pogody = context.WeatherForDB.FromSqlRaw("SELECT * FROM WeatherForDB WHERE name = '"+choosenCity+"'");//.ToList<DownloadWeather>();
+                    foreach(var pogoda in pogody)
+                    {
+                        Console.WriteLine(pogoda.id.Substring(0,4)+"-"+pogoda.id.Substring(4,2)+"-"+pogoda.id.Substring(6,2)+" Temperatura: "+pogoda.temp+"°C");//+" "+pogoda.id.Substring(0,4)+" ");
+                    }
+                    break;
+                default:
+                    Console.WriteLine("Nie ma takiej opcji");
+                    break;
+            }
+            
+                
         }
 
         
     }
-}   
+}
