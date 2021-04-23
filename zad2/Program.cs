@@ -7,7 +7,8 @@ using Newtonsoft.Json;
 //using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace zad2
 {
@@ -126,19 +127,51 @@ namespace zad2
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlite(@"Data Source=.\database\blogging.db");
     }
+    public class Test
+        {
+            public void Welcome(string choosenCity)
+            {
+                var context = new WeatherByCity();
+                DownloadWeather myWeather = new DownloadWeather();
+                DownloadWeather actualWeather;
+                WeatherForDB actualWeatherForDB = new WeatherForDB();
+                lock(this){
+                    actualWeather = JsonConvert.DeserializeObject<DownloadWeather>(myWeather.getWeather(choosenCity));
+                }
+                
+                actualWeatherForDB.getWeather(actualWeather);
+                context.WeatherForDB.Add(actualWeatherForDB);
+                context.SaveChanges();
+                lock(this)
+                {
+                    Console.WriteLine("Miasto: " + actualWeather.name);
+                    Console.WriteLine("Kraj: " + actualWeather.sys.country);
+                    Console.WriteLine("Temperatura: " + actualWeather.main.temp+"°C");
+                    Console.WriteLine("Zachmurzenie: " + actualWeather.weather[0].description);            
+
+                }
+                //blok obliczeń niezależnych
+            }
+        }
     public class Program
     {
         public static void Main(string[] args)
         {
+            //Encoding.GetEncoding("Windows-1250");
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.InputEncoding = System.Text.Encoding.UTF8;
             var context = new WeatherByCity();
             string choosenCity;
+            string[] manyCities = new string[] {"Warsaw","Sopot","Gdynia","Przeworsk","Radom","London","New York"};
+            int n = 7;
+            Thread[] threads = new Thread[n];
+            Test test = new Test();
+
             DownloadWeather myWeather = new DownloadWeather();
             DownloadWeather actualWeather;
             WeatherForDB actualWeatherForDB = new WeatherForDB();
 
-            Console.WriteLine("1. Sprawdz pogode \n2. Pokaz historie dla miasta");
+            Console.WriteLine("1. Sprawdz pogode \n2. Pokaz historie dla miasta\n3. Duzo miast");
             int caseSwitch = Convert.ToInt32(Console.ReadLine());
             
             switch (caseSwitch)
@@ -163,11 +196,27 @@ namespace zad2
                     //    Console.WriteLine(city.name);//+" "+pogoda.id.Substring(0,4)+" ");
                     //}
                     choosenCity = Console.ReadLine();
-                    //Console.WriteLine("SELECT * FROM WeatherForDB WHERE name = '"+choosenCity+"'");
+                    Console.WriteLine("SELECT * FROM WeatherForDB WHERE name = '"+choosenCity+"'");
                     var pogody = context.WeatherForDB.FromSqlRaw("SELECT * FROM WeatherForDB WHERE name = '"+choosenCity+"'");//.ToList<DownloadWeather>();
                     foreach(var pogoda in pogody)
                     {
                         Console.WriteLine(pogoda.id.Substring(0,4)+"-"+pogoda.id.Substring(4,2)+"-"+pogoda.id.Substring(6,2)+" Temperatura: "+pogoda.temp+"°C");//+" "+pogoda.id.Substring(0,4)+" ");
+                    }
+                    break;
+                case 3:
+                    for (int i = 0; i < n; i++)
+                    {
+                        //Console.WriteLine(manyCities[i]);
+                        int zmiennaTym=i;
+                        threads[i] = new Thread(() => test.Welcome(manyCities[zmiennaTym]));
+                    }
+                    foreach(var t in threads)
+                    {
+                        t.Start();
+                    }
+                    foreach (var t in threads)
+                    {
+                        t.Join();
                     }
                     break;
                 default:
