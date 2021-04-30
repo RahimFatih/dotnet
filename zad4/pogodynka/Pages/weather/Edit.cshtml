@@ -1,0 +1,65 @@
+@page
+@model pogodynka.Pages_weather.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Weather</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Weather.weatherDescription" class="control-label"></label>
+                <input asp-for="Weather.weatherDescription" class="form-control" />
+                <span asp-validation-for="Weather.weatherDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Weather.mainWeatherTemp" class="control-label"></label>
+                <input asp-for="Weather.mainWeatherTemp" class="form-control" />
+                <span asp-validation-for="Weather.mainWeatherTemp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Weather.visibility" class="control-label"></label>
+                <input asp-for="Weather.visibility" class="form-control" />
+                <span asp-validation-for="Weather.visibility" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Weather.dt" class="control-label"></label>
+                <input asp-for="Weather.dt" class="form-control" />
+                <span asp-validation-for="Weather.dt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Weather.timezone" class="control-label"></label>
+                <input asp-for="Weather.timezone" class="form-control" />
+                <span asp-validation-for="Weather.timezone" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Weather.id" />
+            <div class="form-group">
+                <label asp-for="Weather.name" class="control-label"></label>
+                <input asp-for="Weather.name" class="form-control" />
+                <span asp-validation-for="Weather.name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Weather.cod" class="control-label"></label>
+                <input asp-for="Weather.cod" class="form-control" />
+                <span asp-validation-for="Weather.cod" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

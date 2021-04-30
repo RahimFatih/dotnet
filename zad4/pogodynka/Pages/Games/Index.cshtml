@@ -1,0 +1,60 @@
+@page
+@model pogodynka.Pages_Games.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Game[0].Tytuł)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Game[0].DataWydania)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Game[0].Gatunek)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Game[0].Platforma)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Game[0].Cena)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Game) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tytuł)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataWydania)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gatunek)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Platforma)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cena)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
