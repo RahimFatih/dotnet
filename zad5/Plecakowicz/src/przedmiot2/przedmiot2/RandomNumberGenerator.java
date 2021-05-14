@@ -1,4 +1,4 @@
-package przedmiot;
+package przedmiot2;
 
 public class RandomNumberGenerator {
 	private long seed;

@@ -1,4 +1,4 @@
-package przedmiot;
+package przedmiot2;
 public class przedmiot {
     public int wagaPrzedmiotu;
     public int wartoscPrzedmiotu;

@@ -1,4 +1,4 @@
-package przedmiot;
+package przedmiot2;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,13 +28,15 @@ public class plecak
         }
         return suma;
     }
-    public void pokazPrzedmioty()
-    {
+    public String pokazPrzedmioty()
+    {   
+        String lista = "";
         for (int i = 0; i < przedmioty.size(); i++)
         {
-            System.out.println("Przedmiot nr. "+ (i + 1));
-            System.out.println("Wartość/Waga: "+przedmioty.get(i).wartoscPrzedmiotu+"/"+przedmioty.get(i).wagaPrzedmiotu+" Stosunek: "+przedmioty.get(i).stosunekWartoscWaga);
+            lista=lista+("Przedmiot nr. "+ (i + 1)+"\n");
+            lista=lista+("Wartość/Waga: "+przedmioty.get(i).wartoscPrzedmiotu+"/"+przedmioty.get(i).wagaPrzedmiotu+" Stosunek: "+przedmioty.get(i).stosunekWartoscWaga+"\n");
         }
+        return lista;
     }
     public void wlozDoPlecaka(List<przedmiot> przedmiotyDoWlozenia)
     {
