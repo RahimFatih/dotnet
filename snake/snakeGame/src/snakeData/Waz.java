@@ -4,107 +4,107 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 public class Waz {
-	private ArrayList<Rectangle> body;
-	private int w = Gra.width;
-	private int h = Gra.height;
-	private int d = Gra.dimension;
+	private ArrayList<Rectangle> ogon;
+	private int w = Gra.szer;
+	private int h = Gra.wys;
+	private int d = Gra.rozmiar;
 	
-	private String move; //NOTHING, UP, DOWN, LEFT, RIGHT
+	private String kierunek; //NOTHING, UP, DOWN, LEFT, RIGHT
 	
 	public Waz() {
-		body = new ArrayList<>();
+		ogon = new ArrayList<>();
 		
-		Rectangle temp = new Rectangle(Gra.dimension, Gra.dimension);
-		temp.setLocation(Gra.width / 2 * Gra.dimension, Gra.height / 2 * Gra.dimension);
-		body.add(temp);
+		Rectangle temp = new Rectangle(Gra.rozmiar, Gra.rozmiar);
+		temp.setLocation(Gra.szer / 2 * Gra.rozmiar, Gra.wys / 2 * Gra.rozmiar);
+		ogon.add(temp);
 		
 		temp = new Rectangle(d, d);
 		temp.setLocation((w / 2 - 1) * d, (h / 2) * d);
-		body.add(temp);
+		ogon.add(temp);
 		
 		temp = new Rectangle(d, d);
 		temp.setLocation((w / 2 - 2) * d, (h / 2) * d);
-		body.add(temp);
+		ogon.add(temp);
 		
-		move = "NOTHING";
+		kierunek = "NOTHING";
 	}
 	
-	public void move() {
-		if(move != "NOTHING") {
-			Rectangle first = body.get(0);
+	public void kierunek() {
+		if(kierunek != "NOTHING") {
+			Rectangle glowa = ogon.get(0);
 			
-			Rectangle temp = new Rectangle(Gra.dimension, Gra.dimension);
+			Rectangle temp = new Rectangle(Gra.rozmiar, Gra.rozmiar);
 			
-			if(move == "UP") {
-				temp.setLocation(first.x, first.y - Gra.dimension);
+			if(kierunek == "UP") {
+				temp.setLocation(glowa.x, glowa.y - Gra.rozmiar);
 			}
-			else if(move == "DOWN") {
-				temp.setLocation(first.x, first.y + Gra.dimension);
+			else if(kierunek == "DOWN") {
+				temp.setLocation(glowa.x, glowa.y + Gra.rozmiar);
 			}
-			else if(move == "LEFT") {
-				temp.setLocation(first.x - Gra.dimension, first.y);
+			else if(kierunek == "LEFT") {
+				temp.setLocation(glowa.x - Gra.rozmiar, glowa.y);
 			}
 			else{
-				temp.setLocation(first.x + Gra.dimension, first.y);
+				temp.setLocation(glowa.x + Gra.rozmiar, glowa.y);
 			}
 			
-			body.add(0, temp);
-			body.remove(body.size()-1);
+			ogon.add(0, temp);
+			ogon.remove(ogon.size()-1);
 		}
 	}
 	
 	public void grow() {
-		Rectangle first = body.get(0);
+		Rectangle glowa = ogon.get(0);
 		
-		Rectangle temp = new Rectangle(Gra.dimension, Gra.dimension);
+		Rectangle temp = new Rectangle(Gra.rozmiar, Gra.rozmiar);
 		
-		if(move == "UP") {
-			temp.setLocation(first.x, first.y - Gra.dimension);
+		if(kierunek == "UP") {
+			temp.setLocation(glowa.x, glowa.y - Gra.rozmiar);
 		}
-		else if(move == "DOWN") {
-			temp.setLocation(first.x, first.y + Gra.dimension);
+		else if(kierunek == "DOWN") {
+			temp.setLocation(glowa.x, glowa.y + Gra.rozmiar);
 		}
-		else if(move == "LEFT") {
-			temp.setLocation(first.x - Gra.dimension, first.y);
+		else if(kierunek == "LEFT") {
+			temp.setLocation(glowa.x - Gra.rozmiar, glowa.y);
 		}
 		else{
-			temp.setLocation(first.x + Gra.dimension, first.y);
+			temp.setLocation(glowa.x + Gra.rozmiar, glowa.y);
 		}
 		
-		body.add(0, temp);
+		ogon.add(0, temp);
 	}
 
 	public ArrayList<Rectangle> getBody() {
-		return body;
+		return ogon;
 	}
 	
 
-	public void setBody(ArrayList<Rectangle> body) {
-		this.body = body;
+	public void setBody(ArrayList<Rectangle> ogon) {
+		this.ogon = ogon;
 	}
 	
 	public int getX() {
-		return body.get(0).x;
+		return ogon.get(0).x;
 	}
 	
 	public int getY() {
-		return body.get(0).y ;
+		return ogon.get(0).y ;
 	}
 	
 	public String getMove() {
-		return move;
+		return kierunek;
 	}
 	
 	public void up() {
-		move = "UP";
+		kierunek = "UP";
 	}
 	public void down() {
-		move = "DOWN";
+		kierunek = "DOWN";
 	}
 	public void left() {
-		move = "LEFT";
+		kierunek = "LEFT";
 	}
 	public void right() {
-		move = "RIGHT";
+		kierunek = "RIGHT";
 	}
 }

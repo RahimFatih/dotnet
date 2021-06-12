@@ -11,16 +11,15 @@ public class Jedzenie {
 
 			int newX = x-(int)(Math.random() * 2);
 			int newY= y-(int)(Math.random() * 2);
-			if (newX>0 && newX<Gra.width-1){
+			if (newX>0 && newX<Gra.szer-1){
 				x=newX;
 			}
-			if (newY>0 && newY<Gra.height-1){
+			if (newY>0 && newY<Gra.wys-1){
 				y=newY;
 			}
 			try {
 				TimeUnit.SECONDS.sleep(1);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -32,16 +31,16 @@ public class Jedzenie {
 	}
 
 	public void random_spawn(Waz player) {
-		boolean onSnake = true;
-		while(onSnake) {
-			onSnake = false;
+		boolean kolizjaWaz = true;
+		while(kolizjaWaz) {
+			kolizjaWaz = false;
 			
-			x = (int)(Math.random() * Gra.width - 1);
-			y = (int)(Math.random() * Gra.height - 1);
+			x = (int)(Math.random() * Gra.szer - 1);
+			y = (int)(Math.random() * Gra.wys - 1);
 			
 			for(Rectangle r : player.getBody()){
 				if(r.x == x && r.y == y) {
-					onSnake = true;
+					kolizjaWaz = true;
 				}
 			}
 		}

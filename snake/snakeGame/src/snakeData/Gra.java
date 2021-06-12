@@ -7,71 +7,71 @@ import javax.swing.JFrame;
 
 public class Gra 
 implements KeyListener{
-	private Waz player;
-	private Jedzenie food;
-	private Grafika graphics;
+	private Waz gracz;
+	private Jedzenie jedzenie;
+	private Grafika grafika;
 	
-	private JFrame window;
+	private JFrame okno;
 	
-	public static final int width = 30;
-	public static final int height = 30;
-	public static final int dimension = 20;
+	public static final int szer = 30;
+	public static final int wys = 30;
+	public static final int rozmiar = 20;
 	
 	public Gra(){
-		window = new JFrame();
+		okno = new JFrame();
 		
-		player = new Waz();
+		gracz = new Waz();
 		
-		food = new Jedzenie(player);
+		jedzenie = new Jedzenie(gracz);
 		
-		graphics = new Grafika(this);
+		grafika = new Grafika(this);
 		
-		window.add(graphics);
+		okno.add(grafika);
 		
-		window.setTitle("Snake");
-		window.setSize(width * dimension + 2, height * dimension + dimension + 4);
-		window.setVisible(true);
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		okno.setTitle("Snake by Denis Firat & Kacper Gasieniec");
+		okno.setSize(szer * rozmiar + 2, wys * rozmiar + rozmiar + 4);
+		okno.setVisible(true);
+		okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	public void start() {
-		graphics.state = "RUNNING";
+		grafika.state = "RUNNING";
 	}
 	
 	public void update() {
-		if(graphics.state == "RUNNING") {
-			if(check_food_collision()) {
-				player.grow();
-				food.random_spawn(player);
+		if(grafika.state == "RUNNING") {
+			if(kolizjaZJedzeniem()) {
+				gracz.grow();
+				jedzenie.random_spawn(gracz);
 			}
-			else if(check_wall_collision() || check_self_collision()) {
-				graphics.state = "END";
+			else if(kolizjaZjedzeniem() || kolizjaZSobą()) {
+				grafika.state = "END";
 			}
 			else {
-				player.move();
+				gracz.kierunek();
 			}
 		}
 	}
 	
-	private boolean check_wall_collision() {
-		if(player.getX() < 0 || player.getX() >= width * dimension 
-				|| player.getY() < 0|| player.getY() >= height * dimension) {
+	private boolean kolizjaZjedzeniem() {
+		if(gracz.getX() < 0 || gracz.getX() >= szer * rozmiar 
+				|| gracz.getY() < 0|| gracz.getY() >= wys * rozmiar) {
 			return true;
 		}
 		return false;
 	}
 	
-	private boolean check_food_collision() {
-		if(player.getX() == food.getX() * dimension && player.getY() == food.getY() * dimension) {
+	private boolean kolizjaZJedzeniem() {
+		if(gracz.getX() == jedzenie.getX() * rozmiar && gracz.getY() == jedzenie.getY() * rozmiar) {
 			return true;
 		}
 		return false;
 	}
 	
-	private boolean check_self_collision() {
-		for(int i = 1; i < player.getBody().size(); i++) {
-			if(player.getX() == player.getBody().get(i).x &&
-					player.getY() == player.getBody().get(i).y) {
+	private boolean kolizjaZSobą() {
+		for(int i = 1; i < gracz.getBody().size(); i++) {
+			if(gracz.getX() == gracz.getBody().get(i).x &&
+					gracz.getY() == gracz.getBody().get(i).y) {
 				return true;
 			}
 		}
@@ -86,21 +86,21 @@ implements KeyListener{
 		
 		int keyCode = e.getKeyCode();
 		
-		if(graphics.state == "RUNNING") {
-			if(keyCode == KeyEvent.VK_W && player.getMove() != "DOWN") {
-				player.up();
+		if(grafika.state == "RUNNING") {
+			if(keyCode == KeyEvent.VK_W && gracz.getMove() != "DOWN") {
+				gracz.up();
 			}
 		
-			if(keyCode == KeyEvent.VK_S && player.getMove() != "UP") {
-				player.down();
+			if(keyCode == KeyEvent.VK_S && gracz.getMove() != "UP") {
+				gracz.down();
 			}
 		
-			if(keyCode == KeyEvent.VK_A && player.getMove() != "RIGHT") {
-				player.left();
+			if(keyCode == KeyEvent.VK_A && gracz.getMove() != "RIGHT") {
+				gracz.left();
 			}
 		
-			if(keyCode == KeyEvent.VK_D && player.getMove() != "LEFT") {
-				player.right();
+			if(keyCode == KeyEvent.VK_D && gracz.getMove() != "LEFT") {
+				gracz.right();
 			}
 		}
 		else {
@@ -112,27 +112,27 @@ implements KeyListener{
 	public void keyReleased(KeyEvent e) {	}
 
 	public Waz getPlayer() {
-		return player;
+		return gracz;
 	}
 
-	public void setPlayer(Waz player) {
-		this.player = player;
+	public void setPlayer(Waz gracz) {
+		this.gracz = gracz;
 	}
 
 	public Jedzenie getFood() {
-		return food;
+		return jedzenie;
 	}
 
-	public void setFood(Jedzenie food) {
-		this.food = food;
+	public void setFood(Jedzenie jedzenie) {
+		this.jedzenie = jedzenie;
 	}
 
 	public JFrame getWindow() {
-		return window;
+		return okno;
 	}
 
-	public void setWindow(JFrame window) {
-		this.window = window;
+	public void setWindow(JFrame okno) {
+		this.okno = okno;
 	}
 	
 }
